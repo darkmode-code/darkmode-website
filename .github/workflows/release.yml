@@ -7,9 +7,6 @@ on:
     paths:
       - '**/*'
 
-permissions:
-  packages: write 
-
 jobs:
   publish-package:
     if: contains(github.event.head_commit.message, 'publish')
