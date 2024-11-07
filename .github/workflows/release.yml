@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: read
+      contents: write
       packages: write
       attestations: write
       id-token: write
@@ -32,7 +32,7 @@ jobs:
         with:
           node-version: '22.x'
           cache: pnpm
-          registry-url: https://npm.pkg.github.com/
+          registry-url: https://registry.npmjs.org/
           scope: "@darkmode-code"
 
       - name: Install dependencies
@@ -41,8 +41,17 @@ jobs:
       - name: Build the package
         run: pnpm build
 
-      - name: Publish to GitHub Packages
-        run: pnpm publish
+      - name: Publish to npm
+        run: pnpm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          npm_config_registry: 'https://npm.pkg.github.com'
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: Release ${{ github.ref_name }}
+          body: |
+            Published npm package version ${{ github.ref_name }}.
+          draft: false
+          prerelease: false
