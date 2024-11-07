@@ -49,4 +49,5 @@ Webflow.push(() => {
       },
     ],
   })
+  console.log('test')
 })
