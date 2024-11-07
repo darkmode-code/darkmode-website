@@ -7,6 +7,9 @@ on:
     paths:
       - '**/*'
 
+permissions:
+  packages: write 
+
 jobs:
   publish-package:
     if: contains(github.event.head_commit.message, 'publish')
@@ -37,3 +40,4 @@ jobs:
         run: pnpm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          npm_config_registry: 'https://npm.pkg.github.com'
