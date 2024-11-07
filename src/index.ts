@@ -49,5 +49,5 @@ Webflow.push(() => {
       },
     ],
   })
-  console.log('test')
+  console.log('test2')
 })
