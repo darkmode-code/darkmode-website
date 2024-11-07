@@ -12,6 +12,12 @@ jobs:
     if: contains(github.event.head_commit.message, 'publish')
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
